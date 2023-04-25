@@ -1,4 +1,15 @@
 ﻿@if (TempData["success"] != null)
 {
-    <h2>@TempData["success"]</h2>
+    <partial name="_NotificationScripts" />
+    <script type="text/javascript">
+        toastr.success('@TempData["success"]');
+    </script>
 }
+@if (TempData["error"] != null)
+{
+    <partial name="_NotificationScripts" />
+    <script type="text/javascript">
+        toastr.success('@TempData["error"]');
+    </script>
+}
+

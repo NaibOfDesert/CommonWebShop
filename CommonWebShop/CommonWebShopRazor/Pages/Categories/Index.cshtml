@@ -1,14 +1,17 @@
-﻿@model List<Category>
+﻿@page
+@model CommonWebShopRazor.Pages.Categories.IndexModel
+
+<h1>Category List</h1>
 
 <div class="container">
     <div class="row pt-4 pb-2">
         <div class="col-6">
-            <h2 class="test-primary">
+            <h2 class="text-primary">
                 Category List
             </h2>
         </div>
-        <div class="col-6 text-end">
-            <a asp-controller="Category" asp-action="Create" class="btn btn-primary">
+        <div  class="col-6 text-end">
+            <a asp-page="/Categories/Create" class="btn btn-primary">
                 <i class="bi bi-plus-square-dotted">
                     Create New Category
                 </i>
@@ -26,12 +29,12 @@
                     Display Order
                 </th>
                 <th>
-                    
+
                 </th>
             </tr>
         </thead>
         <tbody>
-            @foreach (var c in Model.OrderBy(f => f.Name))
+            @foreach (var c in Model.categoryList.OrderBy(f => f.Name))
             {
                 <tr>
                     <td>
@@ -42,10 +45,10 @@
                     </td>
                     <td>
                         <div class="w-75 btn-group" role="group">
-                            <a asp-controller="Category" asp-action="Edit" asp-route-id="@c.Id" class="btn btn-primary mx-2">
+                            <a asp-page="/Categories/Edit" asp-route-id="@c.Id" class="btn btn-primary mx-2">
                                 <i class="bi bi-pencil-square"></i> Edit
                             </a>
-                            <a asp-controller="Category" asp-action="Delete" asp-route-id="@c.Id" class="btn btn-danger mx-2">
+                            <a asp-page="/Categories/Delete" asp-route-id="@c.Id" class="btn btn-danger mx-2">
                                 <i class="bi bi-x-square"></i> Delete
                             </a>
                         </div>
