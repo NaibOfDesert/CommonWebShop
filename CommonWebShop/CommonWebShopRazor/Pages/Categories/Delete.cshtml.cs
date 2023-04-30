@@ -32,7 +32,7 @@ namespace CommonWebShopRazor.Pages.Categories
 
             _db.Categories.Remove(category);
             _db.SaveChanges();
-            // TempData["success"] = "Category edited successfully";
+            TempData["success"] = "Category deleted successfully";
             return RedirectToPage("Index");
         }
 

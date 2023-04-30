@@ -14,7 +14,7 @@ namespace CommonWebShopRazor.Pages.Categories
         public EditModel(ApplicationDbContext db)
         {
             _db = db;
-        }
+        }   
         public void OnGet(int? id)
         {
             if (id.HasValue && id != 0)
@@ -34,7 +34,7 @@ namespace CommonWebShopRazor.Pages.Categories
             {
                 _db.Categories.Update(category);
                 _db.SaveChanges();
-                // TempData["success"] = "Category edited successfully";
+                TempData["success"] = "Category edited successfully";
                 return RedirectToPage("Index");
             }
             return Page();

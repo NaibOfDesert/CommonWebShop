@@ -25,6 +25,7 @@ namespace CommonWebShopRazor.Pages.Categories
         {
             _db.Categories.Add(category);    
             _db.SaveChanges();
+            TempData["success"] = "Category created successfully";
             return RedirectToPage("Index");
         }
     }
