@@ -1,4 +1,4 @@
-﻿using CommonWebShop.Data;
+﻿using CommonWebShop.DataAccess.Data;
 using CommonWebShop.Models;
 using Microsoft.AspNetCore.Mvc;
 

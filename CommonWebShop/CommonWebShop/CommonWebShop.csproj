@@ -16,4 +16,10 @@
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="7.0.6" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\CommonWebShop.DataAccess\CommonWebShop.DataAccess.csproj" />
+    <ProjectReference Include="..\CommonWebShop.Models\CommonWebShop.Models.csproj" />
+    <ProjectReference Include="..\CommonWebShop.Utility\CommonWebShop.Utility.csproj" />
+  </ItemGroup>
+
 </Project>

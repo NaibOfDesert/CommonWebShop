@@ -6,25 +6,25 @@
     }
 }
 <div class="card shadow border-0 mt-4">
-    <div class="card-header bg-secondary bg-opacity-75 bg-gradient ml-0 py-3 rounded-top">
+    <div class="card-header bg-light bg-opacity-50 bg-gradient ml-0 py-3 rounded-top">
         <div class="row">
             <div class="col-12 text-center">
                 <h2 class="text-white py-2">Create Category</h2>
             </div>
         </div>
     </div>
-    <div class="card-body bg-dark p-4 rounded-bottom">
+    <div class="card-body bg-black bg-opacity-50 p-4 rounded-bottom">
         <form method="post" class="row">
-            <div class="border p-3 mt-4">
+            <div class="border p-3 ">
                 <div asp-validation-summary="ModelOnly"></div>
-                <div class="mb-3 row">
-                    <label asp-for="Name" class="p-0"></label>
-                    <input asp-for="Name" class="form-control" placeholder="Name" />
+                <div class="form-floating py-2 col-12">
+                    <input asp-for="Name" class="form-control border-0 shadow" />
+                    <label asp-for="Name" class="ms-2"></label>
                     <span asp-validation-for="Name" class="text-danger"></span>
                 </div>
-                <div class="mb-3 row">
-                    <label asp-for="DisplayOrder" class="p-0"></label>
-                    <input asp-for="DisplayOrder" class="form-control" placeholder="Order" />
+                <div class="form-floating py-2 col-12">
+                    <input asp-for="DisplayOrder" class="form-control border-0 shadow" />
+                    <label asp-for="DisplayOrder" class="ms-2"></label>
                     <span asp-validation-for="DisplayOrder" class="text-danger"></span>
                 </div>
                 <div class="row">

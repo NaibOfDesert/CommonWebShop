@@ -7,11 +7,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CommonWebShop", "CommonWebS
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CommonWebShopRazor", "CommonWebShopRazor\CommonWebShopRazor.csproj", "{D880B8FA-15F6-4A30-950B-0EB3A1A5E7B5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CommonWebShop.DataAccess", "CommonWebShop.DataAccess\CommonWebShop.DataAccess.csproj", "{CC04504B-A17A-4A83-A22C-FCECC1067454}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CommonWebShop.DataAccess", "CommonWebShop.DataAccess\CommonWebShop.DataAccess.csproj", "{CC04504B-A17A-4A83-A22C-FCECC1067454}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CommonWebShop.Models", "CommonWebShop.Models\CommonWebShop.Models.csproj", "{A695BD2E-A730-424E-8014-F18CC643A676}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CommonWebShop.Models", "CommonWebShop.Models\CommonWebShop.Models.csproj", "{A695BD2E-A730-424E-8014-F18CC643A676}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CommonWebShop.Utility", "CommonWebShop.Utility\CommonWebShop.Utility.csproj", "{AE8CEFBF-47B8-49A5-B52E-5EFFCF1D4D97}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CommonWebShop.Utility", "CommonWebShop.Utility\CommonWebShop.Utility.csproj", "{AE8CEFBF-47B8-49A5-B52E-5EFFCF1D4D97}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CommonWebShopDependencyInjection", "CommonWebShopDependencyInjection\CommonWebShopDependencyInjection.csproj", "{D6E7D948-E558-49D7-973C-F0CA4B90F7D5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +41,10 @@ Global
 		{AE8CEFBF-47B8-49A5-B52E-5EFFCF1D4D97}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AE8CEFBF-47B8-49A5-B52E-5EFFCF1D4D97}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AE8CEFBF-47B8-49A5-B52E-5EFFCF1D4D97}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D6E7D948-E558-49D7-973C-F0CA4B90F7D5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D6E7D948-E558-49D7-973C-F0CA4B90F7D5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D6E7D948-E558-49D7-973C-F0CA4B90F7D5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D6E7D948-E558-49D7-973C-F0CA4B90F7D5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
