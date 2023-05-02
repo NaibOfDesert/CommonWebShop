@@ -1,20 +1,21 @@
 ﻿using CommonWebShop.DataAccess.Data;
+using CommonWebShop.DataAccess.Repository.IRepository;
 using CommonWebShop.Models;
 using Microsoft.AspNetCore.Mvc;
 
-namespace CommonWebShop.Controllers
+namespace CommonWebShop.Areas.Admin.Controllers
 {
+    [Area("Admin")]
     public class CategoryController : Controller
     {
-        private readonly ApplicationDbContext _db;
-
-        public CategoryController(ApplicationDbContext db)
+        private readonly IUnitOfWork _unitOfWork;
+        public CategoryController(IUnitOfWork unitOfWork)
         {
-            _db = db;
+            _unitOfWork = unitOfWork;
         }
         public IActionResult Index()
         {
-            var objCategoryList = _db.Categories.ToList();
+            var objCategoryList = _unitOfWork.category.GetAll().ToList();
 
 
             return View(objCategoryList);
@@ -38,8 +39,8 @@ namespace CommonWebShop.Controllers
             //}
             if (ModelState.IsValid)
             {
-                _db.Categories.Add(obj);
-                _db.SaveChanges();
+                _unitOfWork.category.Add(obj);
+                _unitOfWork.Save();
                 TempData["success"] = "Category created successfully";
                 return RedirectToAction("Index", "Category");
             }
@@ -49,14 +50,14 @@ namespace CommonWebShop.Controllers
 
         public IActionResult Edit(int? id)
         {
-            if(id == null || id == 0)
+            if (id == null || id == 0)
             {
                 return NotFound();
             }
-            Category? category = _db.Categories.Find(id);
+            Category? category = _unitOfWork.category.Get(c => c.Id == id);
             //Category? category1 = _db.Categories.FirstOrDefault(c=>c.Id==id);
             //Category? category2 = _db.Categories.Where(c => c.Id == id).FirstOrDefault();
-            if (category == null) 
+            if (category == null)
             {
                 return NotFound();
             }
@@ -68,8 +69,8 @@ namespace CommonWebShop.Controllers
         {
             if (ModelState.IsValid)
             {
-                _db.Categories.Update(obj);
-                _db.SaveChanges();
+                _unitOfWork.category.Update(obj);
+                _unitOfWork.Save();
                 TempData["success"] = "Category edited successfully";
                 return RedirectToAction("Index", "Category");
             }
@@ -82,7 +83,7 @@ namespace CommonWebShop.Controllers
             {
                 return NotFound();
             }
-            Category? category = _db.Categories.Find(id);
+            Category? category = _unitOfWork.category.Get(c => c.Id == id);
             //Category? category1 = _db.Categories.FirstOrDefault(c=>c.Id==id);
             //Category? category2 = _db.Categories.Where(c => c.Id == id).FirstOrDefault();
             if (category == null)
@@ -95,13 +96,13 @@ namespace CommonWebShop.Controllers
         [HttpPost, ActionName("Delete")]
         public IActionResult DeletePost(int? id)
         {
-            Category obj = _db.Categories.Find(id);
-            if(obj == null)
+            Category obj = _unitOfWork.category.Get(c => c.Id == id);
+            if (obj == null)
             {
                 return NotFound();
             }
-            _db.Categories.Remove(obj);
-            _db.SaveChanges();
+            _unitOfWork.category.Remove(obj);
+            _unitOfWork.Save();
             TempData["success"] = "Category deleted successfully";
             return RedirectToAction("Index");
         }
