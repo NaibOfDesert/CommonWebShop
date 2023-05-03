@@ -1,5 +1,4 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore.Migrations;
+﻿using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
@@ -8,7 +7,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace CommonWebShop.DataAccess.Migrations
 {
     /// <inheritdoc />
-    public partial class ProductsMigrationToDb : Migration
+    public partial class ProductChange01 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -38,7 +37,6 @@ namespace CommonWebShop.DataAccess.Migrations
                     ListPrice = table.Column<double>(type: "float", nullable: false),
                     Price = table.Column<double>(type: "float", nullable: false),
                     Price10 = table.Column<double>(type: "float", nullable: false),
-                    ReleaseDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
@@ -58,12 +56,12 @@ namespace CommonWebShop.DataAccess.Migrations
 
             migrationBuilder.InsertData(
                 table: "Products",
-                columns: new[] { "Id", "Author", "Description", "ListPrice", "Price", "Price10", "ReleaseDate", "Title" },
+                columns: new[] { "Id", "Author", "Description", "ListPrice", "Price", "Price10", "Title" },
                 values: new object[,]
                 {
-                    { 1, "Takao", "Manga", 10.0, 20.0, 15.0, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Teneno" },
-                    { 2, "Sakao", "Manga", 10.0, 20.0, 15.0, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Sakeneo" },
-                    { 3, "Kokao", "Manga", 10.0, 20.0, 15.0, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Ono" }
+                    { 1, "Takao", "Manga", 10.0, 20.0, 15.0, "Teneno" },
+                    { 2, "Sakao", "Manga", 10.0, 20.0, 15.0, "Sakeneo" },
+                    { 3, "Kokao", "Manga", 10.0, 20.0, 15.0, "Ono" }
                 });
         }
 

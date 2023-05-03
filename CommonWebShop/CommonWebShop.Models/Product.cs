@@ -5,6 +5,9 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Data.SqlTypes;
+using System.Runtime.CompilerServices;
 
 namespace CommonWebShop.Models
 {
@@ -17,20 +20,24 @@ namespace CommonWebShop.Models
         [Required]
         public string Author { get; set; }
         [Required]
-        [Display(Name = "List Price")]
+        [DisplayName("List Price")]
         [Range(1, 100000)]
         public double ListPrice { get; set; }
         [Required]
-        [Display(Name = "Price for 0-10")]
+        [DisplayName("Price for 1-10")]
         [Range(1, 100000)]
         public double Price { get; set; }
         [Required]
-        [Display(Name = "Price for 10-..")]
+        [DisplayName("Price for 10-..")]
         [Range(1, 100000)]
         public double Price10 { get; set; }
-        public DateTime ReleaseDate { get; set; }
         public string Description { get; set; }
-        Category? Category { get; set; }
+
+        //[DataType(DataType.Date)]
+        //[DisplayFormat(DataFormatString = "{0:dd-MMMM-yyyy}")]
+        //public string? ReleaseDate { get; set; }
+
+        //public Category Category { get; set; }
 
 
 
