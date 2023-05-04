@@ -3,6 +3,7 @@ using CommonWebShop.DataAccess.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CommonWebShop.DataAccess.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230504213216_removeListPriceAddCategoryProduct")]
+    partial class removeListPriceAddCategoryProduct
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -81,10 +84,6 @@ namespace CommonWebShop.DataAccess.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("ImageUrl")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<double>("Price")
                         .HasColumnType("float");
 
@@ -108,7 +107,6 @@ namespace CommonWebShop.DataAccess.Migrations
                             Author = "Takao",
                             CategoryId = 1,
                             Description = "Manga",
-                            ImageUrl = "",
                             Price = 20.0,
                             Price10 = 15.0,
                             Title = "Teneno"
@@ -119,7 +117,6 @@ namespace CommonWebShop.DataAccess.Migrations
                             Author = "Sakao",
                             CategoryId = 2,
                             Description = "Manga",
-                            ImageUrl = "",
                             Price = 20.0,
                             Price10 = 15.0,
                             Title = "Sakeneo"
@@ -130,7 +127,6 @@ namespace CommonWebShop.DataAccess.Migrations
                             Author = "Kokao",
                             CategoryId = 3,
                             Description = "Manga",
-                            ImageUrl = "",
                             Price = 20.0,
                             Price10 = 15.0,
                             Title = "Ono"

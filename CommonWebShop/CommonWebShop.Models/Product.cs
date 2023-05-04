@@ -19,11 +19,6 @@ namespace CommonWebShop.Models
         public string Title { get; set; }
         [Required]
         public string Author { get; set; }
-        [Required]
-        [DisplayName("List Price")]
-        [Range(1, 100000)]
-        public double ListPrice { get; set; }
-        [Required]
         [DisplayName("Price for 1-10")]
         [Range(1, 100000)]
         public double Price { get; set; }
@@ -32,12 +27,12 @@ namespace CommonWebShop.Models
         [Range(1, 100000)]
         public double Price10 { get; set; }
         public string Description { get; set; }
+        public int CategoryId { get; set; }
+        [ForeignKey("CategoryId")]
+        public Category Category { get; set; }
+        public string ImageUrl { get; set; }
 
-        //[DataType(DataType.Date)]
-        //[DisplayFormat(DataFormatString = "{0:dd-MMMM-yyyy}")]
-        //public string? ReleaseDate { get; set; }
 
-        //public Category Category { get; set; }
 
 
 

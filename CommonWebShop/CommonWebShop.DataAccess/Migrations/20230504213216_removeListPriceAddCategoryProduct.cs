@@ -7,7 +7,7 @@
 namespace CommonWebShop.DataAccess.Migrations
 {
     /// <inheritdoc />
-    public partial class ProductChange01 : Migration
+    public partial class removeListPriceAddCategoryProduct : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -34,14 +34,20 @@ namespace CommonWebShop.DataAccess.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Author = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ListPrice = table.Column<double>(type: "float", nullable: false),
                     Price = table.Column<double>(type: "float", nullable: false),
                     Price10 = table.Column<double>(type: "float", nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CategoryId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Products", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Products_Categories_CategoryId",
+                        column: x => x.CategoryId,
+                        principalTable: "Categories",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.InsertData(
@@ -56,23 +62,28 @@ namespace CommonWebShop.DataAccess.Migrations
 
             migrationBuilder.InsertData(
                 table: "Products",
-                columns: new[] { "Id", "Author", "Description", "ListPrice", "Price", "Price10", "Title" },
+                columns: new[] { "Id", "Author", "CategoryId", "Description", "Price", "Price10", "Title" },
                 values: new object[,]
                 {
-                    { 1, "Takao", "Manga", 10.0, 20.0, 15.0, "Teneno" },
-                    { 2, "Sakao", "Manga", 10.0, 20.0, 15.0, "Sakeneo" },
-                    { 3, "Kokao", "Manga", 10.0, 20.0, 15.0, "Ono" }
+                    { 1, "Takao", 1, "Manga", 20.0, 15.0, "Teneno" },
+                    { 2, "Sakao", 2, "Manga", 20.0, 15.0, "Sakeneo" },
+                    { 3, "Kokao", 3, "Manga", 20.0, 15.0, "Ono" }
                 });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Products_CategoryId",
+                table: "Products",
+                column: "CategoryId");
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Categories");
+                name: "Products");
 
             migrationBuilder.DropTable(
-                name: "Products");
+                name: "Categories");
         }
     }
 }

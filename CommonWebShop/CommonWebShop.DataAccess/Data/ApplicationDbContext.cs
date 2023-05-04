@@ -27,9 +27,9 @@ namespace CommonWebShop.DataAccess.Data
                 );
 
             modelBuilder.Entity<Product>().HasData(
-                new Product { Id = 1, Title = "Teneno", Author = "Takao", ListPrice = 10, Price = 20, Price10 = 15, Description = "Manga" },
-                new Product { Id = 2, Title = "Sakeneo", Author = "Sakao", ListPrice = 10, Price = 20, Price10 = 15, Description = "Manga" },
-                new Product { Id = 3, Title = "Ono", Author = "Kokao", ListPrice = 10, Price = 20, Price10 = 15, Description = "Manga" }                
+                new Product { Id = 1, Title = "Teneno", Author = "Takao", Price = 20, Price10 = 15, Description = "Manga", CategoryId = 1, ImageUrl=""},
+                new Product { Id = 2, Title = "Sakeneo", Author = "Sakao", Price = 20, Price10 = 15, Description = "Manga", CategoryId = 2, ImageUrl = "" },
+                new Product { Id = 3, Title = "Ono", Author = "Kokao", Price = 20, Price10 = 15, Description = "Manga", CategoryId = 3, ImageUrl = "" }                
                 );
         }
     }

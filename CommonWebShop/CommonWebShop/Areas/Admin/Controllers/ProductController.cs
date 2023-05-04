@@ -3,6 +3,8 @@ using CommonWebShop.DataAccess.Repository;
 using CommonWebShop.DataAccess.Repository.IRepository;
 using CommonWebShop.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using System.Collections.Generic;
 
 namespace CommonWebShop.Areas.Admin.Controllers
 {
@@ -19,11 +21,20 @@ namespace CommonWebShop.Areas.Admin.Controllers
         public IActionResult Index()
         {
             var objectProductList = _unitOfWork.product.GetAll().ToList();
+
             return View(objectProductList);
         }
 
         public IActionResult Create()
         {
+            IEnumerable<SelectListItem> CategoryList = _unitOfWork.category.GetAll().Select(c => new SelectListItem
+            {
+                Text = c.Name,
+                Value = c.Id.ToString()
+            });
+            //ViewBag.CategoryList = CategoryList;
+            ViewData["CategoryList"] = CategoryList;
+
             return View();
         }
 

@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CommonWebShop.DataAccess.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230503191240_ProductChange01")]
-    partial class ProductChange01
+    [Migration("20230504213553_addImageUrlToProduct")]
+    partial class addImageUrlToProduct
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -77,12 +77,16 @@ namespace CommonWebShop.DataAccess.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("CategoryId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<double>("ListPrice")
-                        .HasColumnType("float");
+                    b.Property<string>("ImageUrl")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<double>("Price")
                         .HasColumnType("float");
@@ -96,6 +100,8 @@ namespace CommonWebShop.DataAccess.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("CategoryId");
+
                     b.ToTable("Products");
 
                     b.HasData(
@@ -103,8 +109,9 @@ namespace CommonWebShop.DataAccess.Migrations
                         {
                             Id = 1,
                             Author = "Takao",
+                            CategoryId = 1,
                             Description = "Manga",
-                            ListPrice = 10.0,
+                            ImageUrl = "",
                             Price = 20.0,
                             Price10 = 15.0,
                             Title = "Teneno"
@@ -113,8 +120,9 @@ namespace CommonWebShop.DataAccess.Migrations
                         {
                             Id = 2,
                             Author = "Sakao",
+                            CategoryId = 2,
                             Description = "Manga",
-                            ListPrice = 10.0,
+                            ImageUrl = "",
                             Price = 20.0,
                             Price10 = 15.0,
                             Title = "Sakeneo"
@@ -123,12 +131,24 @@ namespace CommonWebShop.DataAccess.Migrations
                         {
                             Id = 3,
                             Author = "Kokao",
+                            CategoryId = 3,
                             Description = "Manga",
-                            ListPrice = 10.0,
+                            ImageUrl = "",
                             Price = 20.0,
                             Price10 = 15.0,
                             Title = "Ono"
                         });
+                });
+
+            modelBuilder.Entity("CommonWebShop.Models.Product", b =>
+                {
+                    b.HasOne("CommonWebShop.Models.Category", "Category")
+                        .WithMany()
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Category");
                 });
 #pragma warning restore 612, 618
         }
