@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.SqlTypes;
 using System.Runtime.CompilerServices;
+using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 
 namespace CommonWebShop.Models
 {
@@ -19,6 +20,7 @@ namespace CommonWebShop.Models
         public string Title { get; set; }
         [Required]
         public string Author { get; set; }
+        [Required]
         [DisplayName("Price for 1-10")]
         [Range(1, 100000)]
         public double Price { get; set; }
@@ -26,11 +28,12 @@ namespace CommonWebShop.Models
         [DisplayName("Price for 10-..")]
         [Range(1, 100000)]
         public double Price10 { get; set; }
-        public string Description { get; set; }
+        [Required]
         public int CategoryId { get; set; }
         [ForeignKey("CategoryId")]
         public Category Category { get; set; }
-        public string ImageUrl { get; set; }
+        public string? Description { get; set; }
+        public string? ImageUrl { get; set; }
 
 
 

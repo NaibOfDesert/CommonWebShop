@@ -7,7 +7,7 @@
 namespace CommonWebShop.DataAccess.Migrations
 {
     /// <inheritdoc />
-    public partial class removeListPriceAddCategoryProduct : Migration
+    public partial class newMigration : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -37,7 +37,8 @@ namespace CommonWebShop.DataAccess.Migrations
                     Price = table.Column<double>(type: "float", nullable: false),
                     Price10 = table.Column<double>(type: "float", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CategoryId = table.Column<int>(type: "int", nullable: false)
+                    CategoryId = table.Column<int>(type: "int", nullable: false),
+                    ImageUrl = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -62,12 +63,12 @@ namespace CommonWebShop.DataAccess.Migrations
 
             migrationBuilder.InsertData(
                 table: "Products",
-                columns: new[] { "Id", "Author", "CategoryId", "Description", "Price", "Price10", "Title" },
+                columns: new[] { "Id", "Author", "CategoryId", "Description", "ImageUrl", "Price", "Price10", "Title" },
                 values: new object[,]
                 {
-                    { 1, "Takao", 1, "Manga", 20.0, 15.0, "Teneno" },
-                    { 2, "Sakao", 2, "Manga", 20.0, 15.0, "Sakeneo" },
-                    { 3, "Kokao", 3, "Manga", 20.0, 15.0, "Ono" }
+                    { 1, "Takao", 1, "Manga", "", 20.0, 15.0, "Teneno" },
+                    { 2, "Sakao", 2, "Manga", "", 20.0, 15.0, "Sakeneo" },
+                    { 3, "Kokao", 3, "Manga", "", 20.0, 15.0, "Ono" }
                 });
 
             migrationBuilder.CreateIndex(

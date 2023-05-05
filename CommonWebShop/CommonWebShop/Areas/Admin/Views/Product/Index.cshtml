@@ -12,7 +12,7 @@
     <div class="card-body bg-black bg-opacity-50 p-4 rounded-bottom">
         <div class="row">
             <div class="col-12 text-end">
-                <a asp-controller="Product" asp-action="Create" class="btn btn-primary">
+                <a asp-controller="Product" asp-action="Upsert" class="btn btn-primary">
                     <i class="bi bi-plus-square-dotted">
                         Create New Product
                     </i>
@@ -29,10 +29,10 @@
                         Author
                     </th>
                     <th>
-                        Category
+                        Price
                     </th>
                     <th>
-                        Price
+                        Category
                     </th>
                     <th>
                         Description
@@ -52,18 +52,20 @@
                         <td>
                             @c.Author
                         </td>
-                        <td>
-                            Category
-                        </td>
+
                         <td>
                             @c.Price
+                        </td>
+
+                        <td>
+                            @c.Category
                         </td>
                         <td>
                             @c.Description
                         </td>
                         <td>
                             <div class="w-75 btn-group" role="group">
-                                <a asp-controller="Product" asp-action="Edit" asp-route-id="@c.Id" class="btn btn-primary mx-2">
+                                <a asp-controller="Product" asp-action="Upsert" asp-route-id="@c.Id" class="btn btn-primary mx-2">
                                     <i class="bi bi-pencil-square"></i> Edit
                                 </a>
                                 <a asp-controller="Product" asp-action="Delete" asp-route-id="@c.Id" class="btn btn-danger mx-2">

@@ -2,6 +2,7 @@
 using CommonWebShop.DataAccess.Repository;
 using CommonWebShop.DataAccess.Repository.IRepository;
 using CommonWebShop.Models;
+using CommonWebShop.Models.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Collections.Generic;
@@ -25,64 +26,54 @@ namespace CommonWebShop.Areas.Admin.Controllers
             return View(objectProductList);
         }
 
-        public IActionResult Create()
+        public IActionResult Upsert(int? id) //Update and Insert
         {
+            //ViewBag.CategoryList = CategoryList;
+            //ViewData["CategoryList"] = CategoryList;
             IEnumerable<SelectListItem> CategoryList = _unitOfWork.category.GetAll().Select(c => new SelectListItem
             {
                 Text = c.Name,
                 Value = c.Id.ToString()
             });
-            //ViewBag.CategoryList = CategoryList;
-            ViewData["CategoryList"] = CategoryList;
 
-            return View();
+            ProductViewModel productViewModel = new ProductViewModel()
+            {
+                CategoryList = CategoryList,
+                Product = new Product()
+            };            
+            if(id == null ||  id == 0)
+            {
+                //create
+                return View(productViewModel);
+            }
+            else
+            {
+                //update
+                productViewModel.Product = _unitOfWork.product.Get(p => p.Id == id);
+                return View(productViewModel);
+            }
+
         }
 
         [HttpPost]
-        public IActionResult Create(Product product)
+        public IActionResult Upsert(ProductViewModel productViewModel, IFormFile? file)
         {
-            if(product.Id.ToString() == product.Title)
-            {
-                ModelState.AddModelError("Title", "The Id cannot exaclty match the Title."); 
-            }
             if (ModelState.IsValid)
             {
-                _unitOfWork.product.Add(product);
+                _unitOfWork.product.Add(productViewModel.Product);
                 _unitOfWork.Save();
                 TempData["success"] = "Product created successfully";
                 return RedirectToAction("Index", "Product");
             }
-
-            return View();
-        }
-
-        public IActionResult Edit(int? id) 
-        {
-            if (id == null || id == 0)
+            else //when we don't want to use [ValidationNever]
             {
-                return NotFound();
+                productViewModel.CategoryList = _unitOfWork.category.GetAll().Select(c => new SelectListItem
+                {
+                    Text = c.Name,
+                    Value = c.Id.ToString()
+                });
+                return View(productViewModel);
             }
-            Product? product = _unitOfWork.product.Get(p => p.Id == id);
-
-            if (product == null)
-            {
-                return NotFound();
-            }
-            return View(product);
-        }
-
-        [HttpPost]
-        public IActionResult Edit(Product product)
-        {
-            if (ModelState.IsValid)
-            {
-                _unitOfWork.product.Update(product);
-                _unitOfWork.Save();
-                TempData["success"] = "Product edited successfully";
-                return RedirectToAction("Index", "Product");
-            }
-
-            return View();
         }
 
         public IActionResult Delete(int? id)
