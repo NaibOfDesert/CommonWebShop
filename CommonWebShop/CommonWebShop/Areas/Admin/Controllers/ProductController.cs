@@ -13,10 +13,11 @@ namespace CommonWebShop.Areas.Admin.Controllers
     public class ProductController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;
-
-        public ProductController(IUnitOfWork unitWork)
+        private readonly IWebHostEnvironment _webHostEnvironment;
+        public ProductController(IUnitOfWork unitWork, IWebHostEnvironment webHostEnvironment)
         {
             _unitOfWork = unitWork;
+            _webHostEnvironment = webHostEnvironment;
         }
 
         public IActionResult Index()
@@ -60,6 +61,18 @@ namespace CommonWebShop.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
+                string wwwRootPath = _webHostEnvironment.WebRootPath;
+                if(file != null)
+                {
+                    string filePath = @"images\product";
+                    string fileName = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName);
+                    string productPath = Path.Combine(wwwRootPath, filePath);
+                    using (var fileStream = new FileStream(Path.Combine(productPath, fileName), FileMode.Create))
+                    {
+                        file.CopyTo(fileStream);
+                    }
+                    productViewModel.Product.ImageUrl = @"\" + filePath + @"\" + fileName;
+                }
                 _unitOfWork.product.Add(productViewModel.Product);
                 _unitOfWork.Save();
                 TempData["success"] = "Product created successfully";

@@ -2,7 +2,7 @@
 
 @section Scripts{
     <partial name="_ValidationScriptsPartial" />
-    <script>
+    @*<script>
         tinymce.init({
             selector: 'textarea',
             plugins: 'anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount checklist mediaembed casechange export formatpainter pageembed linkchecker a11ychecker tinymcespellchecker permanentpen powerpaste advtable advcode editimage tinycomments tableofcontents footnotes mergetags autocorrect typography inlinecss',
@@ -14,7 +14,7 @@
                 { value: 'Email', title: 'Email' },
             ]
         });
-    </script>
+    </script>*@
 }
 
 <div class="card shadow border-0 mt-4">
@@ -66,13 +66,14 @@
                     @*TODO: error - validation message not showing, to fix*@
                     <span asp-validation-for="Product.CategoryId" class="text-danger"></span>
                 </div>
-                <div class="py-2 col-12">
+                <div class="form-floating py-2 col-12">
                     <textarea asp-for="Product.Description" class="form-control border-0 shadow"></textarea>
+                    <label asp-for="Product.Description" class="ms-2"></label>
                 </div>
                 <div class="form-floating py-2 col-12">
-                    <input type="file" class="form-control border-0 shadow">
+                    <input type="file" name="file" class="form-control border-0 shadow">
                     <label asp-for="Product.ImageUrl" class="ms-2"></label>
-                    <span asp-validation-for="Product.ImageUrl" class="text-danger"></span>
+                    @*<span asp-validation-for="Product.ImageUrl" class="text-danger"></span>*@
                 </div>
                 <div class="row">
                     <div class="col-6 col-md-3">

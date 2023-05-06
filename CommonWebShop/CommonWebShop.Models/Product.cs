@@ -31,9 +31,13 @@ namespace CommonWebShop.Models
         [Required]
         public int CategoryId { get; set; }
         [ForeignKey("CategoryId")]
+        [ValidateNever]
         public Category Category { get; set; }
         public string? Description { get; set; }
         public string? ImageUrl { get; set; }
+
+        // TODO: add tom
+        // TODO: add title as class
 
 
 
