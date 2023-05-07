@@ -6,6 +6,7 @@ using CommonWebShop.Models.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Collections.Generic;
+using System.IO;
 
 namespace CommonWebShop.Areas.Admin.Controllers
 {
@@ -22,11 +23,15 @@ namespace CommonWebShop.Areas.Admin.Controllers
 
         public IActionResult Index()
         {
-            var objectProductList = _unitOfWork.product.GetAll().ToList();
+            var objectProductList = _unitOfWork.product.GetAll(includeProperties:"Category").ToList();
 
             return View(objectProductList);
         }
 
+        //public IActionResult Upser()
+        //{
+        //    return View();
+        //}
         public IActionResult Upsert(int? id) //Update and Insert
         {
             //ViewBag.CategoryList = CategoryList;
@@ -64,18 +69,37 @@ namespace CommonWebShop.Areas.Admin.Controllers
                 string wwwRootPath = _webHostEnvironment.WebRootPath;
                 if(file != null)
                 {
-                    string filePath = @"images\product";
+                    string folderPath = @"images\product";
                     string fileName = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName);
-                    string productPath = Path.Combine(wwwRootPath, filePath);
-                    using (var fileStream = new FileStream(Path.Combine(productPath, fileName), FileMode.Create))
+                    string filePath = Path.Combine(wwwRootPath, folderPath);
+
+                    if (!string.IsNullOrEmpty(productViewModel.Product.ImageUrl))
+                    {
+                        var filePathOld = Path.Combine(wwwRootPath, productViewModel.Product.ImageUrl.TrimStart('\\'));
+                        if(System.IO.File.Exists(filePathOld)) 
+                        {
+                            System.IO.File.Delete(filePathOld);
+                        }
+                    }
+                    using (var fileStream = new FileStream(Path.Combine(filePath, fileName), FileMode.Create))
                     {
                         file.CopyTo(fileStream);
                     }
-                    productViewModel.Product.ImageUrl = @"\" + filePath + @"\" + fileName;
+                    productViewModel.Product.ImageUrl = @"\" + folderPath + @"\" + fileName;
                 }
-                _unitOfWork.product.Add(productViewModel.Product);
+                if(productViewModel.Product.Id == 0)
+                {
+                    _unitOfWork.product.Add(productViewModel.Product);
+                    TempData["success"] = "Product created successfully";
+
+                }
+                else
+                {
+                    _unitOfWork.product.Update(productViewModel.Product);
+                    TempData["success"] = "Product updated successfully";
+
+                }
                 _unitOfWork.Save();
-                TempData["success"] = "Product created successfully";
                 return RedirectToAction("Index", "Product");
             }
             else //when we don't want to use [ValidationNever]
@@ -116,6 +140,17 @@ namespace CommonWebShop.Areas.Admin.Controllers
             TempData["success"] = "Category deleted successfully";
             return RedirectToAction("Index");
         }
+
+        #region ApiCall
+        [HttpGet]
+        public IActionResult GetAll(int id) 
+        {
+            var objectProductList = _unitOfWork.product.GetAll(includeProperties: "Category").ToList();
+
+            return Json(new {data = objectProductList});
+
+        }
+        #endregion
 
     }
 }
