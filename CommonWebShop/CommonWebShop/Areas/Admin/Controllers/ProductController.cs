@@ -73,14 +73,8 @@ namespace CommonWebShop.Areas.Admin.Controllers
                     string fileName = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName);
                     string filePath = Path.Combine(wwwRootPath, folderPath);
 
-                    if (!string.IsNullOrEmpty(productViewModel.Product.ImageUrl))
-                    {
-                        var filePathOld = Path.Combine(wwwRootPath, productViewModel.Product.ImageUrl.TrimStart('\\'));
-                        if(System.IO.File.Exists(filePathOld)) 
-                        {
-                            System.IO.File.Delete(filePathOld);
-                        }
-                    }
+                    DeleteUrlImage(productViewModel.Product, wwwRootPath);
+
                     using (var fileStream = new FileStream(Path.Combine(filePath, fileName), FileMode.Create))
                     {
                         file.CopyTo(fileStream);
@@ -113,44 +107,76 @@ namespace CommonWebShop.Areas.Admin.Controllers
             }
         }
 
-        public IActionResult Delete(int? id)
-        {
-            if (id == null || id == 0)
-            {
-                return NotFound();
-            }
-            Product? product = _unitOfWork.product.Get(p => p.Id == id);
-            if (product == null)
-            {
-                return NotFound();
-            }
-            return View(product);
-        }
 
-        [HttpPost, ActionName("Delete")]
-        public IActionResult DeletePost(int? id)
-        {
-            Product? product = _unitOfWork.product.Get(p => p.Id == id);
-            if (product == null)
-            {
-                return NotFound();
-            }
-            _unitOfWork.product.Remove(product);
-            _unitOfWork.Save();
-            TempData["success"] = "Category deleted successfully";
-            return RedirectToAction("Index");
-        }
+        //public IActionResult Delete(int? id)
+        //{
+        //    if (id == null || id == 0)
+        //    {
+        //        return NotFound();
+        //    }
+        //    Product? product = _unitOfWork.product.Get(p => p.Id == id);
+        //    if (product == null)
+        //    {
+        //        return NotFound();
+        //    }
+        //    return View(product);
+        //}
+
+        //[HttpPost, ActionName("Delete")]
+        //public IActionResult DeletePost(int? id)
+        //{
+        //    Product? product = _unitOfWork.product.Get(p => p.Id == id);
+        //    if (product == null)
+        //    {
+        //        return NotFound();
+        //    }
+        //    _unitOfWork.product.Remove(product);
+        //    _unitOfWork.Save();
+        //    TempData["success"] = "Category deleted successfully";
+        //    return RedirectToAction("Index");
+        //}
 
         #region ApiCall
         [HttpGet]
-        public IActionResult GetAll(int id) 
+        public IActionResult GetAll() 
         {
             var objectProductList = _unitOfWork.product.GetAll(includeProperties: "Category").ToList();
 
             return Json(new {data = objectProductList});
 
         }
+
+        [HttpDelete]
+        public IActionResult Delete(int? id)
+        {
+            var objectProduct = _unitOfWork.product.Get(p => p.Id == id);
+            string wwwRootPath = _webHostEnvironment.WebRootPath;
+            if (objectProduct == null)
+            {
+                return Json(new { success = false, message = "Error while deleting" });
+            }
+            DeleteUrlImage(objectProduct, wwwRootPath);
+
+            _unitOfWork.product.Remove(objectProduct); 
+            _unitOfWork.Save();
+            return Json(new { success = true, message = "Deleting succesful" });
+
+        }
+
         #endregion
 
+        #region AuxiliaryMethods
+        public void DeleteUrlImage(Product product, string wwwRootPath)
+        {
+            if (!string.IsNullOrEmpty(product.ImageUrl))
+            {
+                var filePathOld = Path.Combine(wwwRootPath, product.ImageUrl.TrimStart('\\'));
+                if (System.IO.File.Exists(filePathOld))
+                {
+                    System.IO.File.Delete(filePathOld);
+                }
+            }
+        }
+        #endregion
     }
 }

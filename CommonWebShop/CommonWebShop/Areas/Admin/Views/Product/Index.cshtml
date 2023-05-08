@@ -1,5 +1,6 @@
 ﻿@model List<Product>
 
+
 <div class="card shadow border-0 mt-4">
     <div class="card-header bg-light bg-opacity-50 bg-gradient ml-0 py-3 rounded-top">
         <div class="row">
@@ -10,7 +11,7 @@
 
     </div>
     <div class="card-body bg-black bg-opacity-50 p-4 rounded-bottom">
-        <div class="row">
+        <div class="row pb-4">
             <div class="col-12 text-end">
                 <a asp-controller="Product" asp-action="Upsert" class="btn btn-primary">
                     <i class="bi bi-plus-square-dotted">
@@ -19,11 +20,11 @@
                 </a>
             </div>
         </div>
-        <table class="table table-bordered table-striped">
+        <table id="tblData" class="table table-bordered table-striped" style="width:100%">
             <thead>
                 <tr>
                     <th>
-                        Product Name
+                        Name
                     </th>
                     <th>
                         Author
@@ -42,7 +43,7 @@
                     </th>
                 </tr>
             </thead>
-            <tbody>
+            @*<tbody>
                 @foreach (var c in Model.OrderBy(f => f.Id))
                 {
                     <tr>
@@ -75,7 +76,11 @@
                         </td>
                     </tr>
                 }
-            </tbody>
+            </tbody>*@
         </table>
     </div>
 </div>
+
+@section Scripts{
+    <script src="~/js/product.js"></script>
+}
