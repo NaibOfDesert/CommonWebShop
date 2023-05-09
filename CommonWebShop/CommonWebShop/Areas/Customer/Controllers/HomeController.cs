@@ -1,4 +1,5 @@
-﻿using CommonWebShop.Models;
+﻿using CommonWebShop.DataAccess.Repository.IRepository;
+using CommonWebShop.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
@@ -8,15 +9,18 @@ namespace CommonWebShop.Areas.Customer.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, IUnitOfWork unitOfWork)
         {
             _logger = logger;
+            _unitOfWork = unitOfWork;
         }
 
         public IActionResult Index()
         {
-            return View();
+            IEnumerable<Product> productList = _unitOfWork.product.GetAll(includeProperties: "Category");
+            return View(productList);
         }
 
         public IActionResult Privacy()
