@@ -12,7 +12,7 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
 builder.Services.AddDbContext<ApplicationDbContext>(options => 
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
-builder.Services.AddDefaultIdentity<IdentityUser>().AddEntityFrameworkStores<ApplicationDbContext>(); // removed "options => options.SignIn.RequireConfirmedAccount = tru
+builder.Services.AddIdentity<IdentityUser, IdentityRole>().AddEntityFrameworkStores<ApplicationDbContext>(); // removed "options => options.SignIn.RequireConfirmedAccount = tru
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>(); 
 
 
