@@ -3,14 +3,18 @@ using CommonWebShop.DataAccess.Repository;
 using CommonWebShop.DataAccess.Repository.IRepository;
 using CommonWebShop.Models;
 using CommonWebShop.Models.ViewModels;
+using CommonWebShop.Utility;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Collections.Generic;
+using System.Data;
 using System.IO;
 
 namespace CommonWebShop.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize(Roles = StaticDetails.Role_Admin)]
     public class ProductController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;
