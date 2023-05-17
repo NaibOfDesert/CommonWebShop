@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Identity;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -8,8 +7,10 @@ using System.Threading.Tasks;
 
 namespace CommonWebShop.Models
 {
-    public class ApplicationUser: IdentityUser
+    public class Company
     {
+        [Key]
+        public int Id { get; set; }
         [Required]
         public string Name { get; set; }
         public string? StreetAdress { get; set; }
@@ -18,4 +19,3 @@ namespace CommonWebShop.Models
         public string? PostalCode { get; set; }
     }
 }
-    

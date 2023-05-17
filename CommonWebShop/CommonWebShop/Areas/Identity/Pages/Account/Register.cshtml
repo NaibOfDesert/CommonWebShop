@@ -12,21 +12,53 @@
     <div class="card-body bg-black bg-opacity-50 p-4 rounded-bottom">
         <form id="registerForm" asp-route-returnUrl="@Model.ReturnUrl" method="post" class="row">
             <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
+
             <div class="form-floating py-2 col-12">
                 <input asp-for="Input.Email" class="form-control border-0 shadow" autocomplete="username" aria-required="true" placeholder="name@example.com" />
                 <label asp-for="Input.Email" class="ms-2">Email</label>
                 <span asp-validation-for="Input.Email" class="text-danger"></span>
             </div>
+            <div class="form-floating py-2 col-12">
+                <input asp-for="Input.Name" class="form-control border-0 shadow" placeholder="Name" />
+                <label asp-for="Input.Name" class="ms-2">Name</label>
+                <span asp-validation-for="Input.Name" class="text-danger"></span>
+            </div>
             <div class="form-floating py-2 col-6">
+                <input asp-for="Input.StreetAdress" class="form-control border-0 shadow" placeholder="St.Name" />
+                <label asp-for="Input.StreetAdress" class="ms-2">Street Adress</label>
+                <span asp-validation-for="Input.StreetAdress" class="text-danger"></span>
+            </div>
+            <div class="form-floating py-2 col-6">
+                <input asp-for="Input.City" class="form-control border-0 shadow" placeholder="Name" />
+                <label asp-for="Input.City" class="ms-2">City</label>
+                <span asp-validation-for="Input.City" class="text-danger"></span>
+            </div>
+            <div class="form-floating py-2 col-6">
+                <input asp-for="Input.State" class="form-control border-0 shadow" placeholder="Name" />
+                <label asp-for="Input.State" class="ms-2">State</label>
+                <span asp-validation-for="Input.State" class="text-danger"></span>
+            </div>
+            <div class="form-floating py-2 col-6">
+                <input asp-for="Input.PostalCode" class="form-control border-0 shadow" placeholder="00-000" />
+                <label asp-for="Input.PostalCode" class="ms-2">PostalCode</label>
+                <span asp-validation-for="Input.PostalCode" class="text-danger"></span>
+            </div>
+            <div class="form-floating py-2 col-6">
+                <input asp-for="Input.PhoneNumber" class="form-control border-0 shadow" placeholder="012345678" />
+                <label asp-for="Input.PhoneNumber" class="ms-2">PhoneNumber</label>
+                <span asp-validation-for="Input.PhoneNumber" class="text-danger"></span>
+            </div>
+            <div class="form-floating py-2 col-12">
                 <input asp-for="Input.Password" class="form-control border-0 shadow" autocomplete="new-password" aria-required="true" placeholder="password" />
                 <label asp-for="Input.Password" class="ms-2">Password</label>
                 <span asp-validation-for="Input.Password" class="text-danger"></span>
             </div>
-            <div class="form-floating py-2 col-6">
+            <div class="form-floating py-2 col-12">
                 <input asp-for="Input.ConfirmPassword" class="form-control border-0 shadow" autocomplete="new-password" aria-required="true" placeholder="password" />
                 <label asp-for="Input.ConfirmPassword" class="ms-2">Confirm Password</label>
                 <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
             </div>
+
             <div class="form-floating py-2 col-6">
                 <select asp-for="Input.Role" asp-items="@Model.Input.RoleList" class="form-select">
                     <option disabled selected>Select Role</option>
