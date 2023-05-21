@@ -16,7 +16,7 @@ using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 namespace CommonWebShop.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    [Authorize(Roles = StaticDetails.Role_Admin)]
+    //[Authorize(Roles = StaticDetails.Role_Admin)]
     public class CompanyController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;
@@ -57,17 +57,17 @@ namespace CommonWebShop.Areas.Admin.Controllers
                 if(company.Id == 0)
                 {
                     _unitOfWork.company.Add(company);
-                    TempData["success"] = "Product created successfully";
+                    TempData["success"] = "Company created successfully";
 
                 }
                 else
                 {
                     _unitOfWork.company.Update(company);
-                    TempData["success"] = "Product updated successfully";
+                    TempData["success"] = "Company updated successfully";
 
                 }
                 _unitOfWork.Save();
-                return RedirectToAction("Index", "Product");
+                return RedirectToAction("Index");
             }
             else //when we don't want to use [ValidationNever]
             {

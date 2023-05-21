@@ -1,0 +1,76 @@
+﻿@model Company
+
+@section Scripts{
+    <partial name="_ValidationScriptsPartial" />
+    @*<script>
+        tinymce.init({
+            selector: 'textarea',
+            plugins: 'anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount checklist mediaembed casechange export formatpainter pageembed linkchecker a11ychecker tinymcespellchecker permanentpen powerpaste advtable advcode editimage tinycomments tableofcontents footnotes mergetags autocorrect typography inlinecss',
+            toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table mergetags | addcomment showcomments | spellcheckdialog a11ycheck typography | align lineheight | checklist numlist bullist indent outdent | emoticons charmap | removeformat',
+            tinycomments_mode: 'embedded',
+            tinycomments_author: 'Author name',
+            mergetags_list: [
+                { value: 'First.Name', title: 'First Name' },
+                { value: 'Email', title: 'Email' },
+            ]
+        });
+    </script>*@
+}
+
+<div class="card shadow border-0 mt-4">
+    <div class="card-header bg-light bg-opacity-50 bg-gradient ml-0 py-3 rounded-top">
+        <div class="row">
+            <div class="col-12 text-center">
+                <h2 class="text-white py-2">@(Model.Id != 0 ? "Update" : "Create") Company</h2>
+            </div>
+        </div>
+    </div>
+    <div class="card-body bg-black bg-opacity-50 p-4 rounded-bottom">
+        @*enctype need to use to upload file*@
+        <form method="post" class="row" enctype="multipart/form-data">
+            <input asp-for="Id" hidden />
+            <div class="row">
+                <div class="col-12">
+                    <div class="border p-3">
+                        <div asp-validation-summary="ModelOnly"></div>
+                        <div class="form-floating py-2 col-12">
+                            <input asp-for="Name" class="form-control border-0 shadow" />
+                            <label asp-for="Name" class="ms-2"></label>
+                            <span asp-validation-for="Name" class="text-danger"></span>
+                        </div>
+                        <div class="form-floating py-2 col-12">
+                            <input asp-for="StreetAdress" class="form-control border-0 shadow" />
+                            <label asp-for="StreetAdress" class="ms-2"></label>
+                            <span asp-validation-for="StreetAdress" class="text-danger"></span>
+                        </div>
+                        <div class="form-floating py-2 col-12">
+                            <input asp-for="City" class="form-control border-0 shadow" />
+                            <label asp-for="City" class="ms-2"></label>
+                            <span asp-validation-for="City" class="text-danger"></span>
+                        </div>
+                        <div class="form-floating py-2 col-12">
+                            <input asp-for="State" class="form-control border-0 shadow" />
+                            <label asp-for="State" class="ms-2"></label>
+                            <span asp-validation-for="State" class="text-danger"></span>
+                        </div>
+                        <div class="form-floating py-2 col-12">
+                            <input asp-for="PostalCode" class="form-control border-0 shadow" />
+                            <label asp-for="PostalCode" class="ms-2"></label>
+                            <span asp-validation-for="PostalCode" class="text-danger"></span>
+                        </div>
+                        <div class="row">
+                            <div class="col-6 col-md-3">
+                                <button type="submit" class="btn btn-outline-primary border-0 form-control">@(Model.Id != 0 ? "Update" : "Create")</button>
+                            </div>
+                            <div class="col-6 col-md-3">
+                                <a asp-controller="Company" asp-action="Index" class="btn btn-outline-secondary border-0 form-control">
+                                    Back to List
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
