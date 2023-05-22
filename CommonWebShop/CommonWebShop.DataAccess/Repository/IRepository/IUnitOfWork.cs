@@ -14,7 +14,8 @@ namespace CommonWebShop.DataAccess.Repository.IRepository
         ICompanyRepository company { get; }
         IShoppingCartRepository shoppingCart { get; }
         IApplicationUserRepository applicationUser { get; }
-
+        IOrderDetailRepository orderDetail { get; }
+        IOrderHeaderRepository orderHeader { get; }
         void Save();
 
     }

@@ -17,6 +17,8 @@ namespace CommonWebShop.DataAccess.Repository
         public ICompanyRepository company { get; private set; }
         public IShoppingCartRepository shoppingCart { get; private set; }
         public IApplicationUserRepository applicationUser { get; private set; }
+        public IOrderDetailRepository orderDetail { get; private set; }
+        public IOrderHeaderRepository orderHeader { get; private set; }
         public UnitOfWork(ApplicationDbContext db)
         {
             _db = db;
@@ -25,6 +27,8 @@ namespace CommonWebShop.DataAccess.Repository
             company = new CompanyRepository(db);
             shoppingCart = new ShoppingCartRepository(db);
             applicationUser = new ApplicationUserRepository(db);
+            orderDetail = new OrderDetailRepository(db);
+            orderHeader = new OrderHeaderRepository(db);
 
         }
 

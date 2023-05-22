@@ -29,7 +29,7 @@ namespace CommonWebShop.DataAccess.Repository
 
         public T Get(Expression<Func<T, bool>> filter, string? includeProperties = null, bool tracked = false)
         {
-            IQueryable<T>? query = null;
+            IQueryable<T> query;
             if (tracked == true)
             {
                 query = dbSet;
@@ -46,9 +46,13 @@ namespace CommonWebShop.DataAccess.Repository
         }
 
         //Category, others...
-        public IEnumerable<T> GetAll(string? includeProperties = null)
+        public IEnumerable<T> GetAll(Expression<Func<T, bool>>? filter = null, string? includeProperties = null)
         {
             IQueryable<T> query = dbSet;
+            if (filter != null)
+            {
+                query = query.Where(filter);
+            }
             query = IncludeProperties(query, includeProperties);
             return query.ToList();  
         }

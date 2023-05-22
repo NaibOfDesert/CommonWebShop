@@ -61,7 +61,7 @@ namespace CommonWebShop.Areas.Customer.Controllers
                 _unitOfWork.shoppingCart.Add(shoppingCartNew);
             }
             _unitOfWork.Save();
-
+            TempData["success"] = "Cart updated successfully";
             return RedirectToAction(nameof(Index));
         }
 
