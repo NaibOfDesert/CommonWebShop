@@ -89,7 +89,9 @@ namespace CommonWebShop.Areas.Customer.Controllers
 
             ShoppingCartViewModel.ShoppingCartList = _unitOfWork.shoppingCart.GetAll(c => c.ApplicationUserId == userId, includeProperties: "Product");
 			ShoppingCartViewModel.OrderHeader.OrderDate = System.DateTime.Now;
-            ShoppingCartViewModel.OrderHeader.ApplicationUserId = userId; 
+            ShoppingCartViewModel.OrderHeader.ApplicationUserId = userId;
+
+            ApplicationUser applicationUser = _unitOfWork.applicationUser.Get(u => u.Id == userId);
 
 			foreach (var c in ShoppingCartViewModel.ShoppingCartList)
 			{
@@ -97,13 +99,15 @@ namespace CommonWebShop.Areas.Customer.Controllers
 				ShoppingCartViewModel.OrderHeader.OrderTotal += c.Price * c.Count;
 			}
 
-            if(ShoppingCartViewModel.OrderHeader.ApplicationUser.CompanyId.GetValueOrDefault() == 0)
+            if(applicationUser.CompanyId.GetValueOrDefault() == 0)
             {
+                // it is a regular customer
                 ShoppingCartViewModel.OrderHeader.PaymentStatus = StaticDetails.PaymentStatusPending;
 				ShoppingCartViewModel.OrderHeader.OrderStatus = StaticDetails.StatusPending;
 			}
 			else
             {
+                // it is a comapny user
 				ShoppingCartViewModel.OrderHeader.PaymentStatus = StaticDetails.PaymentStatusDelayedPayment;
 				ShoppingCartViewModel.OrderHeader.OrderStatus = StaticDetails.StatusApproved;
 			}
@@ -124,8 +128,21 @@ namespace CommonWebShop.Areas.Customer.Controllers
 				_unitOfWork.Save();
 			}
 
-			return View(ShoppingCartViewModel);
+			if (applicationUser.CompanyId.GetValueOrDefault() == 0)
+			{
+				// it is a regular customer, need to capture payment
+                // stripe logic
+
+			}
+
+			return RedirectToAction(nameof(OrderConfirmation), new { id = ShoppingCartViewModel.OrderHeader.Id});
 		}
+
+        public IActionResult OrderConfirmation(int id)
+        {
+            return View(id);
+        }
+
 		public IActionResult Plus(int cartId)
         {
             var cartFromDb = _unitOfWork.shoppingCart.Get(c => c.Id == cartId);
