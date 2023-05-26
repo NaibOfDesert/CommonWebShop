@@ -7,6 +7,7 @@ using CommonWebShop.Utility;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Stripe.Checkout;
 using System.Collections.Generic;
 using System.Data;
 using System.IO;
@@ -130,8 +131,24 @@ namespace CommonWebShop.Areas.Customer.Controllers
 
 			if (applicationUser.CompanyId.GetValueOrDefault() == 0)
 			{
-				// it is a regular customer, need to capture payment
+                // it is a regular customer, need to capture payment
                 // stripe logic
+                var domain = "https://localhost:7036";
+				var options = new SessionCreateOptions
+				{ 
+					SuccessUrl = domain + $"/customer/cart/OrderConfirmation/?id={}",
+					LineItems = new List<SessionLineItemOptions>
+                    {
+	                    new SessionLineItemOptions
+	                    {
+	                        Price = "price_H5ggYwtDq4fbrJ",
+	                        Quantity = 2,
+	                    },
+                    },
+					Mode = "payment",
+				};
+				var service = new SessionService();
+				service.Create(options);
 
 			}
 
