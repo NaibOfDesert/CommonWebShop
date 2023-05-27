@@ -1,14 +1,22 @@
 ﻿@model int 
 
-<div class="container row pt-4">
-    <div class="col-12 text-center">
-        <h1 class="text-secondary text-center">Order Placed Successfully</h1>
-        Your Order number is: @Model 
-        <br />
+<div class="card shadow border-0 mt-4">
+    <div class="card-header bg-light bg-opacity-50 bg-gradient ml-0 py-3 rounded-top">
+        <div class="row">
+            <div class="col-12 text-center">
+                <h2 class="text-white py-2">Order Placed Successfully Information</h2>
+            </div>
+        </div>
     </div>
-    <div class="col-12 text-center" style="color:maroon">
-        <br />
-        Your order has been placed successfully!
-        <br />
+    <div class="card-body bg-black bg-opacity-50 p-4 rounded-bottom">
+        <div class="py-3">
+            <div class="row">
+                Your Order number is: @Model
+            </div>
+            <div class="row" style="color:maroon">
+                Your order has been placed successfully!
+            </div>
+        </div>
+
     </div>
 </div>

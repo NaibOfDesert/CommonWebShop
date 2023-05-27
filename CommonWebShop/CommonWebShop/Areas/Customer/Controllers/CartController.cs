@@ -133,23 +133,39 @@ namespace CommonWebShop.Areas.Customer.Controllers
 			{
                 // it is a regular customer, need to capture payment
                 // stripe logic
-                var domain = "https://localhost:7036";
+                var domain = "https://localhost:7036/";
 				var options = new SessionCreateOptions
 				{ 
-					SuccessUrl = domain + $"/customer/cart/OrderConfirmation/?id={}",
-					LineItems = new List<SessionLineItemOptions>
-                    {
-	                    new SessionLineItemOptions
-	                    {
-	                        Price = "price_H5ggYwtDq4fbrJ",
-	                        Quantity = 2,
-	                    },
-                    },
-					Mode = "payment",
+					SuccessUrl = domain + $"customer/cart/OrderConfirmation?id={ShoppingCartViewModel.OrderHeader.Id}",
+					CancelUrl = domain + "customer/cart/index",
+                    LineItems = new List<SessionLineItemOptions>(),
+					Mode = "payment"
 				};
-				var service = new SessionService();
-				service.Create(options);
 
+                foreach(var c in ShoppingCartViewModel.ShoppingCartList)
+                {
+                    var sessionLineItem = new SessionLineItemOptions
+                    {
+                        PriceData = new SessionLineItemPriceDataOptions()
+                        {
+                            UnitAmount = (long)(c.Price * 100),
+                            Currency = "PLN",
+                            ProductData = new SessionLineItemPriceDataProductDataOptions
+                            {
+                                Name = c.Product.Title
+                            }
+                        },
+                        Quantity = c.Count
+                    };
+                    options.LineItems.Add(sessionLineItem);
+				}
+
+				var service = new SessionService();
+				Session session = service.Create(options);
+                _unitOfWork.orderHeader.UpdateStripePaymentId(ShoppingCartViewModel.OrderHeader.Id, session.Id, session.PaymentIntentId);
+                _unitOfWork.Save();
+                Response.Headers.Add("Location", session.Url);
+                return new StatusCodeResult(303);
 			}
 
 			return RedirectToAction(nameof(OrderConfirmation), new { id = ShoppingCartViewModel.OrderHeader.Id});
@@ -157,7 +173,26 @@ namespace CommonWebShop.Areas.Customer.Controllers
 
         public IActionResult OrderConfirmation(int id)
         {
-            return View(id);
+			OrderHeader orderHeader = _unitOfWork.orderHeader.Get(c => c.Id == id, includeProperties: "ApplicationUser");
+            if(orderHeader.PaymentStatus != StaticDetails.PaymentStatusDelayedPayment)
+            {
+                var service = new SessionService();
+                Session session = service.Get(orderHeader.SessionId);
+
+                if(session.PaymentStatus.ToLower() == "paid")
+                {
+					_unitOfWork.orderHeader.UpdateStripePaymentId(id, session.Id, session.PaymentIntentId);
+                    _unitOfWork.orderHeader.UpdateStatus(id, StaticDetails.StatusApproved, StaticDetails.PaymentStatusApproved);
+                    _unitOfWork.Save();
+                }
+			}
+
+			List<ShoppingCart> shoppingCart = _unitOfWork.shoppingCart.GetAll(c => c.ApplicationUserId == orderHeader.ApplicationUserId).ToList();
+
+			_unitOfWork.shoppingCart.RemoveRange(shoppingCart);
+			_unitOfWork.Save();
+
+			return View(id);
         }
 
 		public IActionResult Plus(int cartId)
