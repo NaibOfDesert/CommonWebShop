@@ -1,6 +1,8 @@
 ﻿using CommonWebShop.DataAccess.Repository.IRepository;
 using CommonWebShop.Models;
+using CommonWebShop.Utility;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 using System.Security.Claims;
@@ -59,6 +61,7 @@ namespace CommonWebShop.Areas.Customer.Controllers
             else
             {
                 _unitOfWork.shoppingCart.Add(shoppingCartNew);
+                HttpContext.Session.SetInt32(StaticDetails.SessionCart, _unitOfWork.shoppingCart.Get(u => u.ApplicationUserId == shoppingCartNew.ApplicationUserId).Count);
             }
             _unitOfWork.Save();
             TempData["success"] = "Cart updated successfully";

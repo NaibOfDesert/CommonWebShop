@@ -1,10 +1,10 @@
-﻿@model int 
+﻿@model int
 
 <div class="card shadow border-0 mt-4">
     <div class="card-header bg-light bg-opacity-50 bg-gradient ml-0 py-3 rounded-top">
         <div class="row">
             <div class="col-12 text-center">
-                <h2 class="text-white py-2">Order Successfull Information</h2>
+                <h2 class="text-white py-2">Payment Successfull Information</h2>
             </div>
         </div>
     </div>
@@ -15,6 +15,7 @@
             </div>
             <div class="row" style="color:maroon">
                 Your order has been placed successfully!
+                <a asp-area="Admin" asp-controller="Order" asp-action="Details" asp-route-orderId="@Model" class="btn btn-primary">Back to Order Details </a>
             </div>
         </div>
 
