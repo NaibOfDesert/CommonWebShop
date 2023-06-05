@@ -184,6 +184,7 @@ namespace CommonWebShop.Areas.Customer.Controllers
                     _unitOfWork.orderHeader.UpdateStatus(id, StaticDetails.StatusApproved, StaticDetails.PaymentStatusApproved);
                     _unitOfWork.Save();
                 }
+                HttpContext.Session.Clear();
 			}
 
 			List<ShoppingCart> shoppingCart = _unitOfWork.shoppingCart.GetAll(c => c.ApplicationUserId == orderHeader.ApplicationUserId).ToList();
