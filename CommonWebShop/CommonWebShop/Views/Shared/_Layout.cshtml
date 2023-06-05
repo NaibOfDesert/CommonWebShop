@@ -1,4 +1,7 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor HttpContextAcessor
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -47,11 +50,29 @@
                             </ul>
                         </li>
                         }
+                        @*@if (HttpContextAcessor.HttpContext.Session.GetInt32(StaticDetails.SessionCart) != null){
+                            <li class="nav-item">
+                                <a class="nav-link text-light" asp-area="Customer" asp-controller="Cart" asp-action="Index">
+                                    <i class="bi bi-bag-plus"></i>&nbsp;
+                                    (@HttpContextAcessor.HttpContext.Session.GetInt32(StaticDetails.SessionCart))
+                                </a>
+                            </li>
+                        }
+                        else
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-light" asp-area="Customer" asp-controller="Cart" asp-action="Index">
+                                    <i class="bi bi-bag-plus"></i>&nbsp;
+                                    (0)
+                                </a>    
+                            </li>
+                        }*@
                         <li class="nav-item">
                             <a class="nav-link text-light" asp-area="Customer" asp-controller="Cart" asp-action="Index">
-                                <i class="bi bi-bag-plus"></i>&nbsp;
+                                @await Component.InvokeAsync("ShoppingCart")
                             </a>
                         </li>
+
                     </ul>
                     <partial name=_LoginPartial/>
                 </div>

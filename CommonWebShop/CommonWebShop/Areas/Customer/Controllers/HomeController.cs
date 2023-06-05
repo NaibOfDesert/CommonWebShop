@@ -23,6 +23,7 @@ namespace CommonWebShop.Areas.Customer.Controllers
 
         public IActionResult Index()
         {
+
             IEnumerable<Product> productList = _unitOfWork.product.GetAll(includeProperties: "Category");
             return View(productList);
         }
@@ -56,14 +57,16 @@ namespace CommonWebShop.Areas.Customer.Controllers
             {
                 shoppingCartFromDb.Count += shoppingCartNew.Count;
                 _unitOfWork.shoppingCart.Update(shoppingCartFromDb);
+                _unitOfWork.Save();
 
             }
             else
             {
                 _unitOfWork.shoppingCart.Add(shoppingCartNew);
-                HttpContext.Session.SetInt32(StaticDetails.SessionCart, _unitOfWork.shoppingCart.Get(u => u.ApplicationUserId == shoppingCartNew.ApplicationUserId).Count);
+                _unitOfWork.Save();
+                HttpContext.Session.SetInt32(StaticDetails.SessionCart, _unitOfWork.shoppingCart.GetAll(u => u.ApplicationUserId == userId).Count());
             }
-            _unitOfWork.Save();
+            
             TempData["success"] = "Cart updated successfully";
             return RedirectToAction(nameof(Index));
         }
