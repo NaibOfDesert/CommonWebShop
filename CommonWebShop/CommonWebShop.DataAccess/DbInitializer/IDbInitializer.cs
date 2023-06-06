@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace CommonWebShop.DataAccess.DbInitializer
 {
-    internal interface IDbInitializer
+    public interface IDbInitializer
     {
         void Initialize();
     }

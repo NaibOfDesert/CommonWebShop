@@ -20,6 +20,7 @@
 
 	<ItemGroup>
 	  <ProjectReference Include="..\CommonWebShop.Models\CommonWebShop.Models.csproj" />
+	  <ProjectReference Include="..\CommonWebShop.Utility\CommonWebShop.Utility.csproj" />
 	</ItemGroup>
 
 </Project>
